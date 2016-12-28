@@ -18,7 +18,23 @@ Everything new should be id last, use the function for your named item. This mod
 ## slugUser(user:{id!, name}) -> slug
 Users have the id last, don't use this until [nighthawk](https://github.com/bustlelabs/nighthawk/issues/331) can deal with it.
 
+```js
+assert.equal(slugUser({ id: 1, name: 'Penny Dog' }), 'penny-dog-1')
+assert.equal(slugUser({ id: 2 }), '2')
+```
+
+## slugPost(post:{id!, title}) -> slug
+```js
+assert.equal(slugPost({ id: 1, title: 'My Great Post!' }), 'my-great-post-1')
+assert.equal(slugPost({ id: 1, title: 'This and That!' }), 'this-that-1')
+assert.equal(slugPost({ id: 2 }), '2')
+```
+
 ## slugArticle(article {id!, title})} -> slug
 The only data type where the slug is id first.
 
-## slugPost(post:{id!, title}) -> slug
+```js
+assert.equal(slugArticle({ id: 1, title: 'My Great Post!' }), '1-my-great-post')
+assert.equal(slugArticle({ id: 1, title: 'This and That!' }), '1-this-that')
+assert.equal(slugArticle({ id: 2 }), '2')
+```
