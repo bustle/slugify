@@ -1,0 +1,24 @@
+# bustle slugify
+
+[![Build Status](https://travis-ci.com/bustlelabs/slugify.svg?token=1KJeREEe58xVHvYm9rGo&branch=master)](https://travis-ci.com/bustlelabs/slugify)
+
+This is how you slug our things.
+
+```slack
+[1:04 PM]  zeejab the truth is within you reconbot
+[1:04 PM]  reconbot so users is id first, articles and posts is id last
+[1:05 PM]  steve articles is also id first
+[1:06 PM]  zeejab everything new is id last, what steve said
+```
+
+# Api
+
+Everything new should be id last, use the function for your named item. This module will be updated as we transition all routes.
+
+## slugUser(user:{id!, name}) -> slug
+Users have the id last, don't use this until [nighthawk](https://github.com/bustlelabs/nighthawk/issues/331) can deal with it.
+
+## slugArticle(article {id!, title})} -> slug
+The only data type where the slug is id first.
+
+## slugPost(post:{id!, title}) -> slug

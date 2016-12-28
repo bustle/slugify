@@ -1,0 +1,32 @@
+{
+  "name": "@bustle/slugify",
+  "version": "0.0.1",
+  "description": "Slug all our things into slugs",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && mocha"
+  },
+  "engines": {
+    "node": ">=4.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bustlelabs/slugify.git"
+  },
+  "keywords": [
+    "slug"
+  ],
+  "author": "Francis Gulotta <wizard@roborooter.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bustlelabs/slugify/issues"
+  },
+  "homepage": "https://github.com/bustlelabs/slugify#readme",
+  "dependencies": {
+    "slug": "^0.9.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "standard": "^8.6.0"
+  }
+}

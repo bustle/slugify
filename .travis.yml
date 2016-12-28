@@ -1,0 +1,28 @@
+# setup a nodejs environment
+language: node_js
+node_js:
+  - 4.3.2
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+
+# Setup our private npm repo
+env:
+  global:
+  # NPM_TOKEN =
+  - secure: "lkBrK//Dajpb87+wuccS5yU3sMVHJdCbVb7ikD/lLs1awPrGRxPTtGgSvt91j6c79xQ3u1h8Jj42JyBtIBXsiUPXFK65NzvGpwTaRLIA/8BuH1DRE4mO9nB7COx6cbvF3QBcCf6U7p7ZD2wc1fM3Imksl9r6ehMr/bLxvE6ueeMDuiifjLPeMfnKQirPAiAV2thhp2gvOXMwa0uB5j9d0YiGZPJLmGze1Lq27T+mkJWcfXTSR7PmtOhpcXnjbDMnP01234TeMaPoBvRMlFvuK6n7d6GS+anvoiyL05EAntljnnbeZ3dpTumYbfnP7yvIq9zxGy/Y54Uh/ctIhL7pNX8X1iyQhmCRjktq/ITsxaK1v3SfIX+bqNCkbutdKMRbdTaA3Ii2+7lN0XR/mE4cqi/y1bRB94mPR55H/gxC/JxxZgJTUKNtI70yQSs3RE66RjC+HbnqBgHw1R/6A/F27tzfbJRoyTXwtcvDEWvE4L5gOHNG3Axt4T0mu1Iz3S/H45s4hh3IAg45remcVq3CW/TuIqZHvLKWdkrVUo1AU0lAsBCZtXPZVyG3GZOXMGcRIiq1ugBBXMIwNrt9w+jdpGXNoaIwShg6Se+RGzbC/zXjXfBKCbDa5gDJhA441lHDC6tr5dlSOdPatT4icFXZOSr6Tfpv89PIKp71r+pWV1k="
+before_install:
+  - npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+  - npm install -g npm@3
+
+# Install and run our package
+install:
+  - npm install
+
+script:
+  - npm run test
