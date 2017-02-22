@@ -1,6 +1,6 @@
 {
   "name": "@bustle/slugify",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "Slug all our things into slugs",
   "main": "index.js",
   "scripts": {

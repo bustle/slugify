@@ -20,6 +20,7 @@ function makeOldSlug (id, string) {
 }
 
 module.exports = {
+  slug: slugify,
   slugUser: user => makeSlug(user.id, user.name),
   slugPost: post => makeSlug(post.id, post.title),
   slugArticle: article => makeOldSlug(article.id, article.title)

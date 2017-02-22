@@ -2,11 +2,18 @@
 const assert = require('assert')
 const slugify = require('../')
 
+const slug = slugify.slug
 const slugUser = slugify.slugUser
 const slugArticle = slugify.slugArticle
 const slugPost = slugify.slugPost
 
 describe('slugify', () => {
+  describe('#slug', () => {
+    it('should slugify a string', () => {
+      assert.equal(slug('a generic string'), 'a-generic-string')
+    })
+  })
+
   describe('#slugUser', () => {
     it('should put the id at the end', () => {
       assert.equal(slugUser({ id: 1, name: 'Penny Dog' }), 'penny-dog-1')

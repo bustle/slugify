@@ -15,6 +15,12 @@ This is how you slug our things.
 
 Everything new should be id last, use the function for your named item. This module will be updated as we transition all routes.
 
+## slug(string) -> slug
+Slug any string
+```js
+assert.equal(slug('a generic string'), 'a-generic-string')
+```
+
 ## slugUser(user:{id!, name}) -> slug
 Users have the id last, don't use this until [nighthawk](https://github.com/bustlelabs/nighthawk/issues/331) can deal with it.
 
