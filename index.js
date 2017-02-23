@@ -1,6 +1,9 @@
 const slug = require('slug')
 
 const STOP_WORDS = ['and', 'or', 'an']
+const IGNORE_CHARS = ['$']
+
+IGNORE_CHARS.forEach(char => { slug.charmap[char] = '' })
 
 function slugify (input) {
   return slug(input, { lower: true })

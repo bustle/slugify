@@ -12,6 +12,10 @@ describe('slugify', () => {
     it('should slugify a string', () => {
       assert.equal(slug('a generic string'), 'a-generic-string')
     })
+
+    it('should not expand certain chars', () => {
+      assert.equal(slug('Bet $5k on the Knicks'), 'bet-5k-on-the-knicks')
+    })
   })
 
   describe('#slugUser', () => {
