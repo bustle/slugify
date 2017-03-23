@@ -1,4 +1,4 @@
-const slug = require('slug')
+const slug = require('./slug')
 
 const STOP_WORDS = ['and', 'or', 'an']
 const IGNORE_CHARS = ['$']
