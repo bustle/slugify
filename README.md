@@ -11,6 +11,8 @@ This is how you slug our things.
 [1:06 PM]  zeejab everything new is id last, what steve said
 ```
 
+This module copies in the `slug` module from npm and the single unicode table it uses for symbol lookups. Installs much faster and doesn't use external services.
+
 # Api
 
 Everything new should be id last, use the function for your named item. This module will be updated as we transition all routes.
