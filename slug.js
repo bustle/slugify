@@ -1,9 +1,11 @@
 /* eslint-disable */
-const _symbols = require('./unicode/So');
+let _symbols;
 const removeList = ['sign','cross','of','symbol','staff','hand','black','white']
         .map(function (word) {return new RegExp(word, 'gi')});
 
 function symbols(code) {
+    if (_symbols == null)
+        _symbols = require('./unicode/So');
     return _symbols[code];
 }
 
