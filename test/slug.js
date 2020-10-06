@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-const slug = require('../slug')
+const { slug } = require('../')
 
 describe('slug', function () {
   it('should convert input to string', function () {
@@ -8,31 +8,17 @@ describe('slug', function () {
     return [slug(567890)].should.eql(['567890'])
   })
   it('should replace whitespaces with replacement', function () {
-    [slug('foo bar baz')].should.eql(['foo-bar-baz']);
-    [slug('foo bar baz', '_')].should.eql(['foo_bar_baz'])
-    return [slug('foo bar baz', '')].should.eql(['foobarbaz'])
+    return [slug('foo bar baz')].should.eql(['foo-bar-baz'])
   })
   it('should remove trailing space if any', function () {
     return [slug(' foo bar baz ')].should.eql(['foo-bar-baz'])
   })
   it('should remove not allowed chars', function () {
     [slug('foo, bar baz')].should.eql(['foo-bar-baz']);
-    [slug('foo- bar baz')].should.eql(['foo-bar-baz'])
+    [slug('foo- bar baz')].should.eql(['foo-bar-baz']);
+    [slug('foo:  bar baz ')].should.eql(['foo-bar-baz']);
+    [slug('foo@  bar baz')].should.eql(['foo-bar-baz'])
     return [slug('foo] bar baz')].should.eql(['foo-bar-baz'])
-  })
-  it('should leave allowed chars in rfc3986 mode', function () {
-    var a, allowed, i, len, results
-    allowed = ['.', '_', '~']
-    results = []
-    for (i = 0, len = allowed.length; i < len; i++) {
-      a = allowed[i]
-      results.push([
-        slug('foo ' + a + ' bar baz', {
-          mode: 'rfc3986'
-        })
-      ].should.eql(['foo-' + a + '-bar-baz']))
-    }
-    return results
   })
   it('should leave allowed chars in pretty mode', function () {
     var a, allowed, i, len, results
@@ -118,7 +104,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -198,7 +184,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -221,7 +207,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -306,7 +292,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      expected = 'foo-' + replacement + '-bar-baz'
+      expected = 'foo-' + replacement.toLowerCase() + '-bar-baz'
       if (!replacement) {
         expected = 'foo-bar-baz'
       }
@@ -339,7 +325,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -367,7 +353,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -400,7 +386,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -511,7 +497,7 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -553,42 +539,7 @@ describe('slug', function () {
     for (char in charMap) {
       replacement = charMap[char]
       replacement = replacement.replace(' ', '-')
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
-    }
-    return results
-  })
-  it('should replace symbols in rfc3986 mode', function () {
-    var char, charMap, replacement, results
-    charMap = {
-      '©': 'c',
-      œ: 'oe',
-      Œ: 'OE',
-      '∑': 'sum',
-      '®': 'r',
-      '∂': 'd',
-      ƒ: 'f',
-      '™': 'tm',
-      '℠': 'sm',
-      '…': '...',
-      '˚': 'o',
-      º: 'o',
-      ª: 'a',
-      '∆': 'delta',
-      '∞': 'infinity',
-      '♥': 'love',
-      '&': 'and',
-      '|': 'or',
-      '<': 'less',
-      '>': 'greater'
-    }
-    results = []
-    for (char in charMap) {
-      replacement = charMap[char]
-      results.push([
-        slug('foo ' + char + ' bar baz', {
-          mode: 'rfc3986'
-        })
-      ].should.eql([('foo-' + replacement + '-bar-baz').toLowerCase()]))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -610,15 +561,13 @@ describe('slug', function () {
       '∆': 'delta',
       '∞': 'infinity',
       '♥': 'love',
-      '&': 'and',
-      '|': 'or',
       '<': 'less',
       '>': 'greater'
     }
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
   })
@@ -649,11 +598,10 @@ describe('slug', function () {
   it('should replace unicode', function () {
     var char, charMap, replacement, results
     charMap = {
-      '☢': 'radioactive',
-      '☠': 'skull-and-bones',
+      '☠': 'skull-bones',
       '☤': 'caduceus',
       '☣': 'biohazard',
-      '☭': 'hammer-and-sickle',
+      '☭': 'hammer-sickle',
       '☯': 'yin-yang',
       '☮': 'peace',
       '☏': 'telephone',
@@ -670,75 +618,22 @@ describe('slug', function () {
     results = []
     for (char in charMap) {
       replacement = charMap[char]
-      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement + '-bar-baz']))
+      results.push([slug('foo ' + char + ' bar baz')].should.eql(['foo-' + replacement.toLowerCase() + '-bar-baz']))
     }
     return results
-  })
-  it('should replace no unicode when disabled', function () {
-    var char, charMap, i, len, results
-    charMap = '😹☢☠☤☣☭☯☮☏☔☎☀★☂☃✈✉✊'.split('')
-    results = []
-    for (i = 0, len = charMap.length; i < len; i++) {
-      char = charMap[i]
-      results.push([
-        slug('foo ' + char + ' bar baz', {
-          symbols: false
-        })
-      ].should.eql(['foo-bar-baz']))
-    }
-    return results
-  })
-  it('should allow altering the charmap', function () {
-    var charmap
-    charmap = {
-      f: 'ph',
-      o: '0',
-      b: '8',
-      a: '4',
-      r: '2',
-      z: '5'
-    }
-    return [
-      slug('foo bar baz', {
-        charmap: charmap
-      }).toUpperCase()
-    ].should.eql(['PH00-842-845'])
   })
   it('should replace lithuanian characters', function () {
-    return slug('ąčęėįšųūžĄČĘĖĮŠŲŪŽ').should.eql('aceeisuuzACEEISUUZ')
+    return slug('ąčęėįšųūžĄČĘĖĮŠŲŪŽ').should.eql('aceeisuuzACEEISUUZ'.toLowerCase())
   })
   it('should replace multichars', function () {
-    return [slug('w/ <3 && sugar || ☠')].should.eql(['with-love-and-sugar-or-skull-and-bones'])
+    return [slug('w/ <3 && sugar || ☠')].should.eql(['with-love-sugar-skull-bones'])
   })
   it('should be flavourable', function () {
     var expected, text
     text = "It's your journey ... we guide you through."
-    expected = 'Its-your-journey-we-guide-you-through'
+    expected = 'Its-your-journey-we-guide-you-through'.toLowerCase()
     return [
-      slug(text, {
-        mode: 'pretty'
-      })
-    ].should.eql([expected])
-  })
-  it('should default to lowercase in rfc3986 mode', function () {
-    var expected, text
-    text = "It's Your Journey We Guide You Through."
-    expected = 'its-your-journey-we-guide-you-through.'
-    return [
-      slug(text, {
-        mode: 'rfc3986'
-      })
-    ].should.eql([expected])
-  })
-  return it('should allow disabling of lowercase', function () {
-    var expected, text
-    text = "It's Your Journey We Guide You Through."
-    expected = 'Its-Your-Journey-We-Guide-You-Through.'
-    return [
-      slug(text, {
-        mode: 'rfc3986',
-        lower: false
-      })
+      slug(text)
     ].should.eql([expected])
   })
 })
