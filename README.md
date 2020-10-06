@@ -1,6 +1,6 @@
 # bustle slugify
 
-[![Build Status](https://travis-ci.com/bustlelabs/slugify.svg?token=1KJeREEe58xVHvYm9rGo&branch=master)](https://travis-ci.com/bustlelabs/slugify)
+[![Build Status](https://api.travis-ci.org/bustle/slugify.svg?branch=master)](https://travis-ci.org/github/bustle/slugify)
 
 This is how you slug our things.
 
@@ -11,7 +11,7 @@ This is how you slug our things.
 [1:06 PM]  zeejab everything new is id last, what steve said
 ```
 
-This module copies in the `slug` module from npm and the single unicode table it uses for symbol lookups. Installs much faster and doesn't use external services.
+This module just uses the `slugify` module from npm and adds some minor bustle-specific adjustments.
 
 # Api
 
@@ -24,8 +24,6 @@ assert.equal(slug('a generic string'), 'a-generic-string')
 ```
 
 ## slugUser(user:{id!, name}) -> slug
-Users have the id last, don't use this until [nighthawk](https://github.com/bustlelabs/nighthawk/issues/331) can deal with it.
-
 ```js
 assert.equal(slugUser({ id: 1, name: 'Penny Dog' }), 'penny-dog-1')
 assert.equal(slugUser({ id: 2 }), '2')

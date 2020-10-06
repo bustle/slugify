@@ -442,7 +442,7 @@ describe('slug', function () {
       Ỵ: 'Y',
       Ỷ: 'Y',
       Ỹ: 'Y',
-      Đ: 'D',
+      Đ: 'DJ',
       ạ: 'a',
       ả: 'a',
       ầ: 'a',
@@ -492,7 +492,7 @@ describe('slug', function () {
       ỵ: 'y',
       ỷ: 'y',
       ỹ: 'y',
-      đ: 'd'
+      đ: 'dj'
     }
     results = []
     for (char in charMap) {
@@ -599,15 +599,12 @@ describe('slug', function () {
     var char, charMap, replacement, results
     charMap = {
       '☠': 'skull-bones',
-      '☤': 'caduceus',
       '☣': 'biohazard',
       '☭': 'hammer-sickle',
       '☯': 'yin-yang',
       '☮': 'peace',
       '☏': 'telephone',
-      '☔': 'umbrella-with-rain-drops',
       '☎': 'telephone',
-      '☀': 'sun-with-rays',
       '★': 'star',
       '☂': 'umbrella',
       '☃': 'snowman',
@@ -626,7 +623,7 @@ describe('slug', function () {
     return slug('ąčęėįšųūžĄČĘĖĮŠŲŪŽ').should.eql('aceeisuuzACEEISUUZ'.toLowerCase())
   })
   it('should replace multichars', function () {
-    return [slug('w/ <3 && sugar || ☠')].should.eql(['with-love-sugar-skull-bones'])
+    return [slug('w/ ♥ && sugar || ☠')].should.eql(['w-love-sugar-skull-bones'])
   })
   it('should be flavourable', function () {
     var expected, text

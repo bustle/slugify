@@ -1,29 +1,45 @@
-const slug = require('./slug')
+const slugify = require('slugify')
 
-const STOP_WORDS = ['and', 'or', 'an']
-const IGNORE_CHARS = ['$']
+const STOP_WORDS = new Set(['and', 'or', 'an'])
 
-IGNORE_CHARS.forEach(char => { slug.charmap[char] = '' })
+slugify.extend({
+  $: '',
+  '&': '',
+  '|': '',
+  '☠': 'skull-bones',
+  '☣': 'biohazard',
+  '☭': 'hammer-sickle',
+  '☯': 'yin-yang',
+  '☮': 'peace',
+  '☏': 'telephone',
+  '☎': 'telephone',
+  '★': 'star',
+  '☂': 'umbrella',
+  '☃': 'snowman',
+  '✈': 'airplane',
+  '✉': 'envelope',
+  '✊': 'raised-fist'
+})
 
-function slugify (input) {
-  return slug(input, { lower: true })
+function slug (input) {
+  return slugify(String(input), { replacement: '-', lower: true, remove: /[^\w\s_~-]+/g })
     .split('-')
-    .filter(word => word && (STOP_WORDS.indexOf(word) === -1))
+    .filter(word => word && !STOP_WORDS.has(word))
     .join('-')
 }
 
 function makeSlug (id, string) {
   if (!string) { return `${id}` }
-  return `${slugify(string)}-${id}`
+  return `${slug(string)}-${id}`
 }
 
 function makeOldSlug (id, string) {
   if (!string) { return `${id}` }
-  return `${id}-${slugify(string)}`
+  return `${id}-${slug(string)}`
 }
 
 module.exports = {
-  slug: slugify,
+  slug,
   slugUser: user => makeSlug(user.id, user.name),
   slugPost: post => makeSlug(post.id, post.title),
   slugArticle: article => makeOldSlug(article.id, article.title)
